@@ -1,6 +1,6 @@
 import os
-
 import pymysql
+
 from dotenv import load_dotenv
 
 from sql_utils import run_sql_file
@@ -11,12 +11,18 @@ class Database:
         """
             Chargez les variables d'environnement de votre fichier .env, puis complétez les lignes 15 à 19 afin de récupérer les valeurs de ces variables
         """
+        load_dotenv()
+        self.host = os.environ.get("HOST")
+        port_str = os.environ.get("PORT")
+        if port_str is not None:
+            self.port = int(port_str)
+        else:
+            print("Error: PORT environment variable is not set.")
 
-        self.host =
-        self.port =
-        self.database =
-        self.user =
-        self.password =
+            self.port = 3306
+        self.database = os.environ.get("DATABASE")
+        self.user = os.environ.get("USER")
+        self.password = os.environ.get("PASSWORD")
 
         self._open_sql_connection()
 
